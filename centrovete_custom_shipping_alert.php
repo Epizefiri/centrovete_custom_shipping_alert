@@ -12,7 +12,7 @@
 add_action('centrovete_last_header','centrovete_shipping_alert', 10);
 function centrovete_shipping_alert(){
 
-	if(is_cart() && WC()->customer->get_shipping_country() == 'IT'){ ?>
+	if(is_cart() && ( WC()->customer->get_shipping_country() == 'IT' || WC()->customer->get_shipping_country() == 'SM' ) ){ ?>
     
 		<div class="d-md-none">
 			<?php centrovete_print_shipping_alert(); ?>
