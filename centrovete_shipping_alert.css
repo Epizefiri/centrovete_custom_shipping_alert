@@ -1,0 +1,30 @@
+#shipping_alert {
+    display: block;
+    padding: 2rem 0.4rem;
+	box-shadow: 0 1px 15px 1px rgb(0 0 0 / 38%);
+    text-align: center;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+}
+
+.progress.bg-centrovete {
+    border-radius: 40px;
+}
+
+.progress.bg-centrovete .progress-bar {
+    background-color: #27AC98;
+    border-radius: 40px;
+    height: 16px;
+}
+
+.progress_container span {
+    display: inline-block; 
+}
+
+.progress_container .progress {
+    width: 70%;
+    margin: 0 3px;
+    display: inline-block;
+    vertical-align: middle;
+
+}

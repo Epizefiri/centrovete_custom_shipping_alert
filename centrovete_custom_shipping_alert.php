@@ -8,9 +8,59 @@
   Author: Salvatore 
  */
 
+// Display the shipping alert
+add_action('centrovete_last_header','centrovete_shipping_alert', 10);
 function centrovete_shipping_alert(){
-    echo 'd';
-    echo 'fff';
+
+	if(is_cart() && WC()->customer->get_shipping_country() == 'IT'){ ?>
+    
+		<div class="d-md-none">
+			<?php centrovete_print_shipping_alert(); ?>
+		</div>
+	
+	<?php }
+
 }
 
-add_action('wp_head','centrovete_shipping_alert', 10);
+function centrovete_print_shipping_alert(){
+	// get the cart total 
+	$cart_total = WC()->cart->get_cart_contents_total();
+	// get the shipping price
+	$shipping_price = WC()->cart->get_shipping_total();
+	// get threshold price for cheaper shipping
+	$threshold_price = get_field('soglia_spedizione_scontata','option');
+	// get the remaining amount for cheaper shipping
+	$remaining_price = $threshold_price - $cart_total;
+	// calculate the percentage of the remaining price
+	$percentage = $cart_total / ($threshold_price / 100 );
+	
+	if($remaining_price > 0){ ?>
+
+		<div id="shipping_alert">
+
+			<span class="mb-2 d-block">
+				Mancano <strong><?php echo wc_price($remaining_price); ?></strong> per la spedizione scontata a <strong><?php echo wc_price(4.50);?></strong>
+			</span>
+
+			<div class="progress_container">
+				<span><?php echo wc_price(0, array('decimals'=> false)); ?></span>
+				<div class="progress bg-centrovete">
+					<div class="progress-bar" role="progressbar" style="width: <?php echo $percentage; ?>%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+				</div>
+				<span> <?php echo wc_price($threshold_price); ?> </span>
+			</div>
+
+		</div>
+
+	  <?php } 
+}
+
+
+// Add custom css
+add_action( 'wp_enqueue_scripts', 'centrovete_shipping_alert_style' );
+function centrovete_shipping_alert_style(){
+
+	wp_enqueue_style( 'centrovete_shipping_alert', plugin_dir_url(__FILE__) . '/centrovete_shipping_alert.css', array(), '1.0', 'all' );
+
+}
+
