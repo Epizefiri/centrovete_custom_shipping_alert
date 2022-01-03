@@ -10,6 +10,7 @@
 
 function centrovete_shipping_alert(){
     echo 'd';
+    echo 'fff';
 }
 
 add_action('wp_head','centrovete_shipping_alert', 10);
