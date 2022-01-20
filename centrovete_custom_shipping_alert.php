@@ -9,10 +9,10 @@
  */
 
 // Display the shipping alert
-add_action('centrovete_last_header','centrovete_shipping_alert', 10);
-function centrovete_shipping_alert(){
+add_action('centrovete_last_header','centrovete_shipping_alert_header', 10);
+function centrovete_shipping_alert_header(){
 
-	if(is_cart() && ( WC()->customer->get_shipping_country() == 'IT' || WC()->customer->get_shipping_country() == 'SM' ) ){ ?>
+	if(is_cart() ){ ?>
     
 		<div class="d-md-none">
 			<?php centrovete_print_shipping_alert(); ?>
@@ -21,6 +21,16 @@ function centrovete_shipping_alert(){
 	<?php }
 
 }
+
+add_action('woocommerce_cart_collaterals','centrovete_shipping_alert_sidebar_cart', 5);
+add_action('woocommerce_checkout_before_order_review', 'centrovete_shipping_alert_sidebar_cart', 5);
+function centrovete_shipping_alert_sidebar_cart(){ ?>
+	
+	<div class="d-none d-lg-block">
+		<?php centrovete_print_shipping_alert(); ?>
+	</div>
+
+<?php }
 
 function centrovete_print_shipping_alert(){
 	// get the cart total 
@@ -33,13 +43,13 @@ function centrovete_print_shipping_alert(){
 	$remaining_price = $threshold_price - $cart_total;
 	// calculate the percentage of the remaining price
 	$percentage = $cart_total / ($threshold_price / 100 );
-	
+
 	if($remaining_price > 0){ ?>
 
-		<div id="shipping_alert">
+		<div class="shipping_alert">
 
 			<span class="mb-2 d-block">
-				Mancano <strong><?php echo wc_price($remaining_price); ?></strong> per la spedizione scontata a <strong><?php echo wc_price(4.50);?></strong>
+				<?php echo sprintf(get_field('testo_soglia_minima_carrello', 'option'),'<strong>'.wc_price($remaining_price).'</strong>'); ?>
 			</span>
 
 			<div class="progress_container">

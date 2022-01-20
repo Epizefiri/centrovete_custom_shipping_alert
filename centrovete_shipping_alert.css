@@ -1,4 +1,4 @@
-#shipping_alert {
+.shipping_alert {
     display: block;
     padding: 1.4rem 0.4rem;
 	box-shadow: 0 1px 15px 1px rgb(0 0 0 / 38%);
@@ -7,6 +7,16 @@
     font-size: 14px;
 }
 
+.order_review_container .shipping_alert,
+.cart-collaterals .shipping_alert {
+    box-shadow: none;
+    background-color: #fff;
+    margin: 2rem -12px;
+}
+
+.order_review_container .shipping_alert {
+    margin: 2rem -16px;
+}
 .progress.bg-centrovete {
     border-radius: 40px;
 }
